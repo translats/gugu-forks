@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const ORG_NAME = 'SlimefunGuguProject'
+const ORG_NAME = 'buiawpkgew1'
 const TOKEN = process.env.ACCESS_TOKEN
 const PER_PAGE = 50
 
