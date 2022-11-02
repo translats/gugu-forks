@@ -9,11 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-      BOT_USERNAME: ${{ secrets.BOT_USERNAME }}
-      BOT_EMAIL: ${{ secrets.BOT_EMAIL }}
-      WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-      WEBHOOK_KEY: ${{ secrets.WEBHOOK_KEY }}
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
     steps:
       - name: Checking out Repository
@@ -48,5 +44,3 @@ jobs:
 
       - name: Run script
         run: pnpm run start
-        with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
