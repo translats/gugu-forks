@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const ORG_NAME = 'wsdfafw','translats'
+const ORG_NAME = 'translats'
 const TOKEN = process.env.ACCESS_TOKEN
 const PER_PAGE = 50
 
