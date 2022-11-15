@@ -1,7 +1,6 @@
 const axios = require('axios')
 
-// const ORG_NAME = 'translats'
-const USER_NAE = 'buiawpkgew1'
+const ORG_NAME = 'translats'
 const TOKEN = process.env.ACCESS_TOKEN
 const PER_PAGE = 50
 
@@ -19,53 +18,29 @@ async function getRepos() {
     let nextQuery = true
     while (nextQuery) {
         // 获取所有仓库
-        // try {
-        //     const response = await axios.get(`/orgs/${ORG_NAME}/repos`, {
-        //         params: {
-        //             page: page,
-        //             per_page: PER_PAGE,
-        //             type: 'forks'
-        //         }
-        //     })
-        //     let len = response.data.length
-        //     if (len < PER_PAGE) {
-        //         nextQuery = false
-        //     }
-
-        //     response.data.forEach((repo) => {
-        //         repos.push(repo.name)
-        //     })
-
-        //     page++
-        // } catch (err) {
-        //     errTimes++
-        //     if (errTimes >= 3) {
-        //         console.log('错误次数过多, 停止')
-        //         nextQuery = false
-        //     }
-        // }
-
-        try{
-            const response =await axios.get(`/users/${USER_NAE}/repos`,{
-                params:{
+        try {
+            const response = await axios.get(`/orgs/${ORG_NAME}/repos`, {
+                params: {
                     page: page,
                     per_page: PER_PAGE,
                     type: 'forks'
                 }
             })
-            let len=response.data.length
-            if(len<PER_PAGE){
-                nextQuery=false
+            let len = response.data.length
+            if (len < PER_PAGE) {
+                nextQuery = false
             }
-            response.data.forEach((repo)=>{
+
+            response.data.forEach((repo) => {
                 repos.push(repo.name)
             })
+
             page++
-        }catch(err){
+        } catch (err) {
             errTimes++
-            if(errTimes>=3){
-                console.log('错误次数过多')
-                nextQuery=false
+            if (errTimes >= 3) {
+                console.log('错误次数过多, 停止')
+                nextQuery = false
             }
         }
 
@@ -80,26 +55,15 @@ async function getRepos() {
  * @returns {Promise<int>} 仓库落后上游多少commit
  */
 async function getStatus(repo) {
-    // try {
-    //     const repoInfo = await axios.get(`/repos/${ORG_NAME}/${repo}`)
-    //     const author = repoInfo.data.source.owner.login
-    //     const forkBranch = repoInfo.data.default_branch
-    //     const originalBranch = repoInfo.data.source.default_branch
-
-    //     const compareData = await axios.get(`/repos/${ORG_NAME}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
-    //     return compareData.data.ahead_by
-    // } catch (err) {
-    //     console.error(err)
-    // }
-    try{
-        const repoInfo=await axios.get(`/users/${USER_NAE}/${repo}`)
+    try {
+        const repoInfo = await axios.get(`/repos/${ORG_NAME}/${repo}`)
         const author = repoInfo.data.source.owner.login
         const forkBranch = repoInfo.data.default_branch
         const originalBranch = repoInfo.data.source.default_branch
 
-        const compareData = await axios.get(`/users/${USER_NAE}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
+        const compareData = await axios.get(`/repos/${ORG_NAME}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
         return compareData.data.ahead_by
-    }catch(err){
+    } catch (err) {
         console.error(err)
     }
 }
