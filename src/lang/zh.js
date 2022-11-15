@@ -1,5 +1,3 @@
-zh: {
-    message:{
-        hello : 我的世界
+message:{
+    hello : 我的世界
     }
-}
