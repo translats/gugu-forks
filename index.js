@@ -97,7 +97,7 @@ async function getStatus(repo) {
         const forkBranch = repoInfo.data.default_branch
         const originalBranch = repoInfo.data.source.default_branch
 
-        const compareData = await axios.get(`/repos/${USER_NAE}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
+        const compareData = await axios.get(`/users/${USER_NAE}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
         return compareData.data.ahead_by
     }catch(err){
         console.error(err)
