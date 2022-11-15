@@ -1,6 +1,15 @@
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+<title>test</title>
+<script>
+    if (navigator.appName == "Netscape") {
+        var language = navigator.language;
+    } else {
+        var language = navigator.browserLanguage;
 
-<div id="app">
-    <p>{{ $t("message.hello") }}</p>
-  </div>
+    }
+    if(language.indexOf("en")> -1){
+        document.location.href=`en/index.html`
+    }else if(language.indexOf("zh")> -1){
+        document.location.href=`zh/index.html`
+    }
+</script>
+helod wuode
