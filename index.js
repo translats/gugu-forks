@@ -1,6 +1,7 @@
 const axios = require('axios')
 
 const ORG_NAME = 'translats'
+const USER_NAE = 'buiawpkgew1'
 const TOKEN = process.env.ACCESS_TOKEN
 const PER_PAGE = 50
 
@@ -44,6 +45,30 @@ async function getRepos() {
             }
         }
 
+        try{
+            const response =await axios.get(`/users/${USER_NAE}/repos`,{
+                params:{
+                    page: page,
+                    per_page: PER_PAGE,
+                    type: 'forks'
+                }
+            })
+            let len=response.data.length
+            if(len<PER_PAGE){
+                nextQuery=false
+            }
+            response.data.forEach((repo)=>{
+                repos.push(repo.name)
+            })
+            page++
+        }catch(err){
+            errTimes++
+            if(errTimes>=3){
+                console.log('错误次数过多')
+                nextQuery=false
+            }
+        }
+
     }
     return repos
 }
@@ -64,6 +89,17 @@ async function getStatus(repo) {
         const compareData = await axios.get(`/repos/${ORG_NAME}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
         return compareData.data.ahead_by
     } catch (err) {
+        console.error(err)
+    }
+    try{
+        const repoInfo=await axios.get(`/users/${USER_NAE}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
+        const author = repoInfo.data.source.owner.login
+        const forkBranch = repoInfo.data.default_branch
+        const originalBranch = repoInfo.data.source.default_branch
+
+        const compareData = await axios.get(`/repos/${USER_NAE}/${repo}/compare/${forkBranch}...${author}:${originalBranch}`)
+        return compareData.data.ahead_by
+    }catch(err){
         console.error(err)
     }
 }
