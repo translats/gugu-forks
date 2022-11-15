@@ -1,7 +1,7 @@
 const messages={
     en:{
         massages:{
-            hello:'hello wold'
+            hello:'{msg} world'
         }
     },
     zh:{
@@ -10,9 +10,3 @@ const messages={
         }
     }
 }
-
-const i18n = new VueI18n({
-    locale:'en'
-    messages,
-})
-new Vue({ i18n }).$mount('#app')
